@@ -24,28 +24,39 @@ header {
 }
 
 .menu a {
-    position: relative;
-    padding-bottom: 4px;
     text-decoration: none;
     color: #333;
     font-size: 14px;
 }
 
-.menu a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background: #333;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
+.menu-toggle {
+    display: none; /* PCでは非表示 */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
-.menu a:hover::after {
-    transform: scaleX(1);
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+}
+
+/* モバイル表示 */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* 幅が狭いときだけ表示 */
+    }
+
+    .menu {
+        display: none; /* メニューは非表示 */
+    }
 }
 
 #home {
