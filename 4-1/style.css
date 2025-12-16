@@ -51,11 +51,11 @@ header {
 /* モバイル表示 */
 @media screen and (max-width: 768px) {
     .menu-toggle {
-        display: flex; /* 幅が狭いときだけ表示 */
+        display: flex; 
     }
 
     .menu {
-        display: none; /* メニューは非表示 */
+        display: none; 
     }
 }
 
@@ -241,6 +241,7 @@ header {
     gap: 32px;          
     max-width: 960px;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .selectReasonOverviewListImg {
@@ -403,6 +404,7 @@ header {
     padding: 60px 16px;    
     align-items: center;    
     justify-content: center;  
+    flex-wrap: wrap;
 }
 
 .casesList {
@@ -413,6 +415,7 @@ header {
     width: 100%;
     position: relative;
     padding-bottom: 32px;
+    flex-wrap: wrap;
 }
 
 .casesListContentTitle{
@@ -637,7 +640,7 @@ header {
     padding-bottom: 32px; 
     border-top: 1px solid rgba(0,0,0,0.1);
     border-bottom: 1px solid rgba(0,0,0,0.1);;
-
+    flex-wrap: wrap;
 }
 
 .blogListImg{
@@ -694,7 +697,8 @@ header {
     gap: 32px;
     max-width: 960px;        
     width: 100%;
-    margin: 0 auto;          
+    margin: 0 auto;        
+    flex-wrap: wrap;  
 }
   
 .contactListContent,
