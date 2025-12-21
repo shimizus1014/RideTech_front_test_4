@@ -48,7 +48,6 @@ header {
     border-radius: 2px;
 }
 
-/* モバイル表示 */
 @media screen and (max-width: 768px) {
     .menu-toggle {
         display: flex; 
@@ -75,6 +74,19 @@ header {
     margin-bottom: 48px;
     font-size: 18px;
     line-height: 1.6;
+}
+
+@media screen and (max-width: 767px) {
+	#home h1 {
+    	margin-bottom: 32px;
+    	font-size: 24px;
+    	font-weight: bold;
+	}
+	#home p {
+    	margin-bottom: 48px;
+    	font-size: 12px;
+    	line-height: 1.6;
+	}
 }
 
 .homeBtn {
@@ -104,10 +116,13 @@ header {
     border: 2px solid #000;
 }
 
-#logos {
-    text-align: center;
-    padding: 60px 16px;
+#logos h2{
     border-bottom: 2px solid #ccc; 
+    padding: 60px 16px;
+}
+
+#logos h2{
+    text-align: center;
 }
 
 #logos h2 {
@@ -118,13 +133,21 @@ header {
 .selectLogos {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 16px; 
+}
+
+@media screen and (max-width: 767px) {
+	.selectLogos {
+  		display: grid;
+  		grid-template-columns: repeat(2, 1fr); 
+  		gap: 32px; 
+
+	}
 }
 
 .selectLogo {
     width: 120px;
     height: auto;
+    margin:16px auto;
 }
 
 #features {
@@ -136,7 +159,6 @@ header {
     display: flex;
     justify-content: center;
     gap: 32px;
-    flex-wrap: wrap;  
     margin-top: 40px;
 }
 
@@ -150,6 +172,28 @@ header {
     text-align: left;    
     width: 300px;         
     box-sizing: border-box; 
+}
+
+@media screen and (max-width: 767px) {
+	.featureLists {
+    	display: flex;
+		flex-direction:column;
+    	gap: 32px;
+    	margin-top: 16px auto;
+}
+
+	.featureList {
+    	border: 1px solid #ddd;
+    	padding: 32px;
+    	border-radius: 8px;
+    	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    	transition: transform 0.3s ease, box-shadow 0.3s ease;
+    	background-color: #fff;
+    	text-align: left;    
+    	width: 500px;         
+    	box-sizing: border-box;
+		margin:16px auto;	
+	}
 }
 
 .featureList:hover {
@@ -182,11 +226,12 @@ header {
 .selectReasonList ul {
     list-style: none;
     padding: 16px;
-    margin: 16px 16px 16px 100px;
+    margin: 16px auto;
     display: flex;
     flex-direction: column; 
     gap: 32px;            
-    text-align: left;       
+    text-align: left; 
+    width: 1280px;      
 }
 
 .selectReasonList li {
@@ -247,6 +292,13 @@ header {
 .selectReasonOverviewListImg {
     width: 250px;          
     flex-shrink: 0;       
+}
+
+@media screen and (max-width: 767px) {
+	.selectReasonOverviewListImg {
+    	width: 500px;          
+    	flex-shrink: 0;       
+	}
 }
 
 .selectReasonOverviewListImg img {
@@ -320,8 +372,15 @@ header {
     display: flex;
     justify-content: center;
     gap: 32px;
-    flex-wrap: wrap;
     margin-top: 40px;
+}
+
+@media screen and (max-width: 767px) {
+	.howDatas {
+  		display: grid;
+  		grid-template-columns: repeat(2, 1fr); 
+
+	}
 }
 
 .howData{
@@ -594,8 +653,7 @@ header {
     gap: 32px;          
     justify-content: center; 
     padding: 60px 16px;  
-    margin: 32px 64px;
-    padding: 32px;
+    margin: 32px auto;
 }
 
 .faqList{
@@ -603,7 +661,6 @@ header {
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    
 }
 
 .faqList h3::after {
@@ -704,6 +761,13 @@ header {
 .contactListContent,
 .contactListImg {
     flex: 1;                 
+}
+
+@media screen and (max-width: 767px) {
+	.contactList {
+  		display: flex;
+  		flex-direction: column;
+	}
 }
   
 .contactListContent {
