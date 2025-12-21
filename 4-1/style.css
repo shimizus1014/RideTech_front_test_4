@@ -170,7 +170,7 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: #fff;
     text-align: left;    
-    width: 300px;         
+    width: 100%;
     box-sizing: border-box; 
 }
 
@@ -190,7 +190,7 @@ header {
     	transition: transform 0.3s ease, box-shadow 0.3s ease;
     	background-color: #fff;
     	text-align: left;    
-    	width: 500px;         
+        width: 100%;         
     	box-sizing: border-box;
 		margin:16px auto;	
 	}
@@ -230,8 +230,7 @@ header {
     display: flex;
     flex-direction: column; 
     gap: 32px;            
-    text-align: left; 
-    width: 1280px;      
+    text-align: left;    
 }
 
 .selectReasonList li {
@@ -296,7 +295,7 @@ header {
 
 @media screen and (max-width: 767px) {
 	.selectReasonOverviewListImg {
-    	width: 500px;          
+        width: 100%;        
     	flex-shrink: 0;       
 	}
 }
@@ -375,13 +374,6 @@ header {
     margin-top: 40px;
 }
 
-@media screen and (max-width: 767px) {
-	.howDatas {
-  		display: grid;
-  		grid-template-columns: repeat(2, 1fr); 
-
-	}
-}
 
 .howData{
     border: 1px solid #ddd;
@@ -395,6 +387,18 @@ header {
     font-weight: bold;
     color: blue;
 }
+
+@media screen and (max-width: 767px) {
+    .howDatas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  
+    .howData {
+      padding: 16px;
+    }
+  }
 
 #roadMap  {
     text-align: center;
@@ -492,7 +496,7 @@ header {
 }
 
 .casesListImg{
-    width: 250px;          
+    width: 100%;          
     flex-shrink: 0;         
 }
 
@@ -701,7 +705,7 @@ header {
 }
 
 .blogListImg{
-    width: 250px;        
+    width: 100%;         
     flex-shrink: 0;  
 }
 
@@ -806,6 +810,14 @@ footer {
 }
 
 
+@media screen and (max-width: 767px) {
+	#SampleBrandFooter {
+        font-size: 12px;
+        color: #111;
+        text-decoration: none;
+	}
+}
+  
 
 
 
