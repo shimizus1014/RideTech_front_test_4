@@ -8,25 +8,56 @@ const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 // ===== ここから実装対象 =====
 // タイムアウト付き fetch（AbortController を使って中断可能にする）
 async function fetchJSON(url, { timeoutMs = 5000 } = {}) {
-  // TODO: 実装者が書く
-  // 実装ポイント：
-  //  1) AbortController を生成し、setTimeout で timeoutMs 後に abort()
-  //  2) fetch(url, { signal }) を await で呼ぶ
-  //  3) HTTP ステータスを判定し、200系以外は throw new Error('HTTP ' + res.status)
-  //  4) res.json() を返す
-  //  5) finally でタイマーを必ず clear する
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // モック POST エンドポイント（/api/contact）
 // 今回のテストではサーバは用意しないため、特定URLはモック動作でOK
 async function postJSON(url, payload, { timeoutMs = 5000 } = {}) {
-  // TODO: 実装者が書く
-  // 実装ポイント：
-  //  1) url が '/api/contact' で終わる場合のみモック動作にする
-  //     - 適当な遅延（例：await new Promise(r => setTimeout(r, 800))）
-  //     - payload.email に 'fail' が含まれる場合は throw new Error('サーバエラー…')
-  //     - それ以外は { ok: true, message: '送信を受け付けました。' } を返す
-  //  2) それ以外の URL は通常の fetch で POST し、ステータス判定・タイムアウト処理を行う
+
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+ // 成功モック
+  if (url === '/api/contact') {
+    return { success: true };
+  }else{
+    throw new Error('送信に失敗しました');
+  }
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // ===== 状態管理（そのまま使用） =====
@@ -106,6 +137,19 @@ async function openDetail(product) {
     //     例）const [reviews] = await Promise.all([ fetchJSON('./data/reviews.json') ]);
     //  2) product.id で reviews をフィルタリング
     //  3) $('.modal-body', dom.modalRoot).innerHTML = detailHTML(product, list) で描画
+
+     // 1) reviews.json を取得（並列取得の形）
+     const [reviews] = await Promise.all([
+      fetchJSON('./data/reviews.json')
+    ]);
+
+    // 2) 対象商品のレビューだけに絞る
+    const list = reviews.filter(r => r.productId === product.id);
+
+    // 3) 詳細を描画
+    $('.modal-body', dom.modalRoot).innerHTML =
+      detailHTML(product, list);
+
   } catch (e) {
     $('.modal-body', dom.modalRoot).innerHTML = `<p class="notice-text">詳細の取得に失敗しました。</p>`;
   }
@@ -181,11 +225,13 @@ function handleContact() {
     };
 
     try {
-      // TODO: 実装者が書く
-      // 実装ポイント：
-      //  1) postJSON('/api/contact', payload) を await
-      //  2) 成功メッセージを表示し、フォームを reset()
-      //  3) 例外時はキャッチしてユーザーに分かる文言で表示
+      // 1) POST（モック or 本番）
+      await postJSON('/api/contact', payload);
+
+      // 2) 成功時
+      dom.result.textContent = '送信しました。';
+      dom.form.reset();
+
     } catch (err) {
       dom.result.textContent = String(err?.message || '送信に失敗しました。');
     }
@@ -202,10 +248,12 @@ async function init() {
 async function loadProducts() {
   startLoading();
   try {
-    // TODO: 実装者が書く
-    // 実装ポイント：
-    //  1) fetchJSON('./data/products.json') を await
-    //  2) renderList(products) を呼ぶ
+    // 1) products.json を取得
+    const products = await fetchJSON('./data/products.json');
+
+    // 2) 画面に描画
+    renderList(products);
+    
   } catch (e) {
     showError('データの取得に失敗しました（' + (e?.message || 'Unknown') + '）');
   }
